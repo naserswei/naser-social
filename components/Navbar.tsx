@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 function Navbar() {
   return (
-    <div className="flex justify-between px-4 py-6 items-center">
+    <div className="flex justify-between  py-6 items-center">
       {/* right */}
       <div className=" w-[20%] md:hidden lg:block">
         <Link className="text-blue-600 font-bold text-lg" href="/">
@@ -65,10 +65,12 @@ function Navbar() {
       {/* left */}
       <div className=" w-[30%] flex gap-2 items-center justify-end">
         <div className=" md:flex items-center flex-row-reverse gap-8 ">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <Link href="/profile/123">
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </Link>
           <div className="hidden xl:flex gap-6">
             <Image
               src="/img/people.png"
