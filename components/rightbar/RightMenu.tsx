@@ -3,11 +3,25 @@ import FriendRequest from "./FriendRequest";
 import Birthdays from "./Birthdays";
 import Ad from "./Ad";
 import UserInformation from "./UserInformation";
+import UserMedia from "./UserMedia";
+import { User as PrismaUser } from "@prisma/client";
+type ExtendedUser = PrismaUser & {
+  _count: {
+    followers: number;
+    posts: number;
+    followings: number;
+  };
+};
 
-function RightMenu({ type }: { type: "home" | "profile" }) {
+type ProfileProps = {
+  user?: ExtendedUser | null | undefined;
+};
+
+function RightMenu({ user }: ProfileProps) {
   return (
     <div className="flex flex-col gap-6">
-      {type === "profile" ? <UserInformation /> : null}
+      {user ? <UserInformation user={user} /> : null}
+      {user ? <UserMedia /> : null}
       {/* friend requests */}
       <FriendRequest />
       {/* birthdays */}
