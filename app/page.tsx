@@ -1,28 +1,15 @@
+import { getuser } from "@/actions/user";
 import AddPost from "@/components/center/AddPost";
 import PostFeed from "@/components/center/PostFeed";
 import Stories from "@/components/center/Stories";
 import LeftMenu from "@/components/leftbar/LeftMenu";
 import RightMenu from "@/components/rightbar/RightMenu";
-import prisma from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
 
 export default async function Home() {
-  const { userId } = auth();
-  const user = await prisma.user.findFirst({
-    where: {
-      id: userId as string,
-    },
-    include: {
-      _count: {
-        select: {
-          followers: true,
-          posts: true,
-          followings: true,
-        },
-      },
-    },
-  });
-  if (!user) return null;
+  const user = await getuser();
+  if ("error" in user) {
+    return <div>Error: {user.error}</div>; // You can show an error message or handle it differently
+  }
 
   return (
     <main className="flex gap-6 pt-6">

@@ -1,13 +1,13 @@
 "use client";
 
 import { createpost } from "@/actions/post";
-import { User } from "@prisma/client";
+import { getUser } from "@/actions/user";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 type props = {
-  user: User;
+  user: getUser;
 };
 
 function AddPost({ user }: props) {

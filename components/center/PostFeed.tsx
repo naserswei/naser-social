@@ -1,19 +1,11 @@
 import Post from "./Post";
-
 import NoPost from "../fallbacks/NoPost";
 import Addpost_dialog from "../Addpost_dialog";
 import { auth } from "@clerk/nextjs/server";
-import { User as PrismaUser } from "@prisma/client";
-type ExtendedUser = PrismaUser & {
-  _count: {
-    followers: number;
-    posts: number;
-    followings: number;
-  };
-};
+import { getUser } from "@/actions/user";
 
 type ProfileProps = {
-  user?: ExtendedUser | null | undefined;
+  user: getUser;
 };
 
 async function PostFeed({ user }: ProfileProps) {

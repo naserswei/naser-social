@@ -60,7 +60,7 @@ function Post({ post }: postprops) {
       </div>
 
       <div>
-        <Comments />
+        <Comments postid={post.id} />
       </div>
     </div>
   );

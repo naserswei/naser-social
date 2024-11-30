@@ -1,35 +1,24 @@
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-
-import { User as PrismaUser } from "@prisma/client";
 import { formatDate } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
-
-type ExtendedUser = PrismaUser & {
-  _count: {
-    followers: number;
-    posts: number;
-    followings: number;
-  };
-};
+import UserUpdate from "./UserUpdate";
+import FollowInteraction from "./FollowInteraction";
+import { getUser } from "@/actions/user";
 
 type ProfileProps = {
-  user: ExtendedUser | null;
+  user: getUser;
 };
 
 async function UserInformation({ user }: ProfileProps) {
   const { userId } = auth();
+
   return (
     <div className="bg-white p-4 rounded-md shadow-md flex flex-col gap-4 w-full text-sm">
       {/* header */}
       <div className="flex justify-between items-center">
         <span className="text-gray-500 font-medium">User information</span>
-        {user?.id === userId && (
-          <Link className=" text-blue-500" href="/">
-            Update all
-          </Link>
-        )}
+        {user?.id === userId && <UserUpdate />}
       </div>
       {/* username */}
       <div className="flex gap-2">
@@ -87,9 +76,9 @@ async function UserInformation({ user }: ProfileProps) {
         </p>
       </div>
       <div>
-        <button className=" bg-blue-500 text-white w-full p-2 rounded-md hover:bg-blue-700 transition-colors">
-          Follow
-        </button>
+        {user?.id && userId && user.id !== userId && (
+          <FollowInteraction reciever={user.id} sender={userId} />
+        )}
       </div>
     </div>
   );
